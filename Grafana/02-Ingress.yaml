@@ -1,0 +1,18 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana-ingress
+  namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: traefik-homelab
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`grafana.home.ff1.dev`)
+      kind: Rule
+      services:
+        - name: grafana
+          port: 3000
+  tls:
+    secretName: grafana-dashboard-tls
